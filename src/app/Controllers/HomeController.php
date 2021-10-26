@@ -11,19 +11,24 @@ class HomeController
         return View::make('index', ['foo'=>'bar']);
     }
 
+    public function download()
+    {
+        header('Content-Type: png');
+        header('Content-Disposition: attachment; filename="a kiss.png"');
+
+        readfile(STORAGE_PATH . '/a kiss.png');
+    }
+
     public function upload()
     {
-        echo '<pre>';
-        var_dump($_FILES);
-        echo '<pre>';
+
         // file destination in our storage
         $filePath=STORAGE_PATH . '/' . $_FILES['receipt']['name'];
         // move uploaded file from temporary directory to our storage so file will be persistent in the app
         move_uploaded_file($_FILES['receipt']['tmp_name'], $filePath);
 
-        echo '<pre>';
-        var_dump(pathinfo($filePath));
-        echo '<pre>';
+       header('Location: /');
+       exit;
 
     }
 
