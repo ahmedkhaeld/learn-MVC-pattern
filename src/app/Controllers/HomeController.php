@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Controllers;
 
+use App\App;
 use App\View;
 use PDO;
 
@@ -10,41 +11,59 @@ class HomeController
 {
     public function index():View
     {
+        $db=App::db();
+        $db2=App::db();
+        $db3=App::db();
+        var_dump($db===$db2, $db2===$db3,$db===$db3);
+        exit;
+
+        $email='paul@gmail.com';
+        $name='paul';
+        $amount=28;
+
         try {
-            $db = new PDO('mysql:host=db;dbname=my_db', 'root', 'root');
+            $db->beginTransaction();
 
-            $email='hadi@gmail.com';
-            $name='hadi';
-            $isActive=1;
-            $createdAt=date('Y-m-d H:i:s', strtotime('10/11/2021 12:34PM'));
+            $newUserStmt = $db->prepare(
+            'INSERT INTO user (email, full_name, is_active, created_at)
+                   VALUES (?, ?, 1,NOW())'
+            );
 
-            $query='INSERT INTO user (email, full_name, is_active, created_at) 
-                  VALUES (:email, :name, :active, :date)';
-            $stmt=$db->prepare($query);
-            $stmt->bindParam('name', $name);
-            $stmt->bindParam('email', $email);
-            $stmt->bindParam('active', $isActive, PDO::PARAM_BOOL);
-            $stmt->bindParam('date', $createdAt);
-            $isActive=0;
+            $newInvoiceStmt = $db->prepare(
+                'INSERT INTO invoice (amount, user_id)
+               VALUES (?,?)'
+            );
 
-            $stmt->execute();
+            $newUserStmt->execute([$email, $name]);
+            $userId = (int)$db->lastInsertId();
 
+            $newInvoiceStmt->execute([$amount, $userId]);
 
-            $id=(int) $db->lastInsertId();
-
-
-            $users=$db->query('SELECT * FROM user WHERE id='.$id)->fetch();
-
-            foreach($users as $user){
-                echo '<pre>';
-                var_dump($user);
-                echo '<pre>';
+            $db->commit();
+        }catch (\Throwable $e){
+            if($db->inTransaction()) {
+                $db->rollBack();
             }
-
-
-        }catch (\PDOException $e){
-            throw new \PDOException($e->getMessage(), (int) $e->getCode());
         }
+
+
+        $fetchStmt=$db->prepare(
+        'SELECT invoice.id AS invoice_id, amount, user_id, full_name
+              FROM invoice
+              INNER JOIN  user ON user_id=user.id
+              WHERE email=?'
+        );
+
+        $fetchStmt->execute([$email]);
+
+        echo '<pre>';
+        var_dump($fetchStmt->fetch(PDO::FETCH_ASSOC));
+        echo '<pre>';
+
+
+
+
+
         return View::make('index');
     }
 

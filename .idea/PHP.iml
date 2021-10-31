@@ -12,6 +12,10 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php81" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/graham-campbell/result-type" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App;
 use App\Exceptions\ViewNotFoundException;
+use JetBrains\PhpStorm\Pure;
 
 
 class View
@@ -10,7 +11,7 @@ class View
     {
     }
 
-    public static function make(string $view, array $params=[]): static
+    #[Pure] public static function make(string $view, array $params=[]): static
     {
         return new static($view, $params);
     }
