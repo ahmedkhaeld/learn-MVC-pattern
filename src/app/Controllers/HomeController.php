@@ -15,8 +15,8 @@ class HomeController
     public function index():View
     {
 
-        $email='cr7@gmail.com';
-        $name='ronaldo';
+        $email='messi@gmail.com';
+        $name='leo';
         $amount=28;
 
         $userModel=new User();
