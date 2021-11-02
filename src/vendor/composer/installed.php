@@ -184,6 +184,15 @@
             'reference' => 'c814a05837f2edb0d1471d6e3f4ab3501ca3899a',
             'dev_requirement' => true,
         ),
+        'psr/container' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/container',
+            'aliases' => array(),
+            'reference' => '2ae37329ee82f91efadc282cc2d527fd6065a5ef',
+            'dev_requirement' => false,
+        ),
         'ramsey/collection' => array(
             'pretty_version' => '1.2.2',
             'version' => '1.2.2.0',
