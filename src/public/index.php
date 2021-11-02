@@ -2,6 +2,7 @@
 
 use App\App;
 use App\Config;
+use App\Container;
 use App\Controllers\HomeController;
 use App\Controllers\InvoiceController;
 use App\Router;
@@ -13,8 +14,8 @@ $dotenv->load();
 
 const STORAGE_PATH = __DIR__ . '/../storage';
 const VIEW_PATH = __DIR__ . '/../views';
-
-$router = new Router();
+$container = new Container();
+$router = new Router($container);
 
 $router
     ->get('/', [HomeController::class, 'index'])
